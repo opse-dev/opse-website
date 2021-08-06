@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "forever": "forever next dev"
+    "forever": "pm2 start npm --name \"next\" -- run dev"
   },
   "dependencies": {
     "child_process": "^1.0.2",
