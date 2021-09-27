@@ -1,4 +1,19 @@
+@import 'theme.css';
+@import 'primereact/resources/primereact.min.css';
+@import 'primeicons/primeicons.css';
+@import 'primeflex/primeflex.css';
+
+
 body {
-    background: #001;
-    color: #FDFDFD;
+    background: var(--surface-0);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    padding: 0px; margin: 0px;
+}
+
+.navBar {
+    &.p-toolbar {
+        background: var(--surface-0);
+        border: none;
+    }
 }
