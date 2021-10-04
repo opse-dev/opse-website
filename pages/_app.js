@@ -7,15 +7,14 @@ function MyApp({ Component, pageProps }) {
         <>
             <Head>
                 <link rel="icon" href="/favicon.ico" />
-                <title>Ontario Post-Secondary Esports | The Future of School Spirit</title>
+                <title>{pageProps.title}</title>
                 <meta charSet="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <Layout>
-
+                <Component {...pageProps} />
             </Layout>
-            <Component {...pageProps} />
         </>
     );
 }
