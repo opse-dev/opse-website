@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Layout from '../components/Layout'
-import styles from "../styles/global.scss";
+import Layout from '../components/Layout';
+import "../styles/global.scss";
 
 function MyApp({ Component, pageProps }) {
     return (
@@ -12,10 +12,10 @@ function MyApp({ Component, pageProps }) {
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
+    
             <Layout>
-
+                <Component {...pageProps} />
             </Layout>
-            <Component {...pageProps} />
         </>
     );
 }
