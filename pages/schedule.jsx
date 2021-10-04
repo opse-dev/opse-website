@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Toolbar } from 'primereact/toolbar';
+import { Calendar } from 'primereact/calendar';
 
 class Page extends Component {
     constructor(props) {
@@ -9,7 +10,14 @@ class Page extends Component {
     render() {
         return (
             <>
-                <h1>Schedule</h1>
+                <div>
+                    <h1>Schedule</h1>
+                    <h2>Filters</h2>
+                    
+                </div>
+                <div>
+
+                </div>
             </>
         )
     }
