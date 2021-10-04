@@ -16,6 +16,24 @@ exports.query = async (query) => {
     return res;
 }
 
+exports.getTeams = async () => {
+    let res = await mysql.query('SELECT * FROM `teams`');
+    await mysql.end();
+    return res;
+}
+
+exports.getSchools = async () => {
+    let res = await mysql.query('SELECT * FROM `schools`');
+    await mysql.end();
+    return res;
+}
+
+exports.getPlayers = async () => {
+    let res = await mysql.query('SELECT * FROM `players`');
+    await mysql.end();
+    return res;
+}
+
 exports.getLeagues = async () => {
     let res = await mysql.query('SELECT * FROM `games`');
     await mysql.end();
