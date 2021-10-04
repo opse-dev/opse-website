@@ -10,8 +10,7 @@ class Page extends Component {
     render() {
         return (
             <>
-                {/* <Toolbar left="TEST" right="TEST"className="navBar" /> */}
-                <h1>Hello World!</h1>
+                <h1>Standings</h1>
             </>
         )
     }
