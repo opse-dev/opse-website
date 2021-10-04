@@ -1,10 +1,13 @@
-import Nav from './Nav';
+import React from 'react';
+import Header from './Header';
 
 const Layout = ({ children }) => {
     return (
         <>
-            <Nav />
-            <main>{children}</main>
+            <Header />
+            <div className="main">
+                {children}
+            </div>
         </>
     );
 };
