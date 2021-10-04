@@ -1,6 +1,4 @@
 body {
-    background: var(--surface-0);
-    color: var(--text-color);
     padding: 0px; margin: 0px;
 }
 
@@ -12,4 +10,9 @@ body {
     max-width: $large;
     margin-left: auto;
     margin-right: auto;
+}
+
+.bg-dark {
+    background: var(--surface-0);
+    color: var(--text-color);
 }
