@@ -4,12 +4,11 @@ async function handler(req, res) {
     switch (req.method) {
         case "GET":
             let data = await query('SELECT * FROM `games`');
-            console.log(data);
-            res.end("TEST");
+            res.json(data);
             break;
     
         default:
-            res.end("TEST");
+            res.end("Method not allowed");
             break;
     }
 }
