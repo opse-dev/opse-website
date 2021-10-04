@@ -15,3 +15,15 @@ exports.query = async (query) => {
     await mysql.end();
     return res;
 }
+
+exports.getLeagues = async () => {
+    let res = await mysql.query('SELECT * FROM `games`');
+    await mysql.end();
+    return res;
+}
+
+exports.getMatches = async () => {
+    let res = await mysql.query('SELECT * FROM `matches`');
+    await mysql.end();
+    return res;
+}
