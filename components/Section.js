@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Section = () => {
+const Section = ({children}) => {
     return (
         <div className="section">
-            
+            {children}
         </div>
     );
 };
