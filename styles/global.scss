@@ -2,18 +2,35 @@
 @import 'primereact/resources/primereact.min.css';
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
+@import 'layout.scss';
+@import 'nav.scss';
+@import 'admin.scss';
 
-
+/* -----------
+// Typography
+--------------
+*/
 body {
-    background: var(--surface-0);
-    color: var(--text-color);
     font-family: var(--font-family);
-    padding: 0px; margin: 0px;
 }
 
-.navBar {
-    &.p-toolbar {
-        background: var(--surface-0);
-        border: none;
-    }
+h1, h2 {
+    font-family: var(--header-font-family);
+}
+
+h3 {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 26px;
+    color: var(--text-color);
+    text-align: left;
+    text-shadow: 0em 0em 0.27em rgb(255 255 255 / 76%);
+}
+
+h4{
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: var(--primary-color);
+    letter-spacing: 1px;
 }
