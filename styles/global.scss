@@ -1,8 +1,27 @@
+/* -----------
+// Media Query Responsive Breakpoints
+--------------
+*/
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
+/* -----------
+// Variables
+--------------
+*/
+$header-height: 80px;
+
+/* -----------
+// Imports
+--------------
+*/
 @import 'theme.css';
 @import 'primereact/resources/primereact.min.css';
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
 @import 'layout.scss';
+@import 'header.scss';
 @import 'nav.scss';
 @import 'admin.scss';
 

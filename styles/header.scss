@@ -1,0 +1,9 @@
+header {
+    position: fixed;
+    top: 0px;
+    background: var(--surface-0);
+    padding: 20px 0px;
+    width: 100%;
+    height: $header-height;
+    max-height: $header-height;;
+}

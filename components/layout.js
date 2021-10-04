@@ -1,11 +1,11 @@
-import Nav from './Nav';
 import React from 'react';
+import Header from './Header';
 
 const Layout = () => {
     return (
         <>
-            <Nav />
-            <div>
+            <Header />
+            <div className="main">
                     
             </div>
         </>

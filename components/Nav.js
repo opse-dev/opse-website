@@ -3,19 +3,17 @@ import Link from 'next/Link';
 
 const Nav = () => {
     return (
-        <nav>
-            <ul>
-                <li>
-                    <Link href='/'>Home</Link>
-                </li>
-                <li>
-                    <Link href='/sc'>Schedule</Link>
-                </li>
-                <li>
-                    <Link href='/'>Standing</Link>
-                </li>
-            </ul>
-        </nav>
+        <ul>
+            <li>
+                <Link href='/'>Home</Link>
+            </li>
+            <li>
+                <Link href='/schedule'>Schedule</Link>
+            </li>
+            <li>
+                <Link href='/standings'>Standings</Link>
+            </li>
+        </ul>
     );
 };
 

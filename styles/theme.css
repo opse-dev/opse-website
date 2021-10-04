@@ -20,7 +20,12 @@
   --surface-900: #000011;
 
   --content-padding:1.25rem;
-  --inline-spacing:0.5rem; }
+  --inline-spacing:0.5rem;
+
+  --small: 576px;
+  --medium: 768px;
+  --large: 992px;
+}
 
 * {
   box-sizing: border-box; }
