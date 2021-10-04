@@ -1,13 +1,10 @@
 import Nav from './Nav';
-import React from 'react';
 
-const Layout = () => {
+const Layout = ({ children }) => {
     return (
         <>
             <Nav />
-            <div>
-                    
-            </div>
+            <main>{children}</main>
         </>
     );
 };
