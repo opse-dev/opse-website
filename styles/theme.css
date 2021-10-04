@@ -5,7 +5,8 @@
   --primary-color: #D7282F;
   --primary-color-text: #FDFDFD;
 
-  --font-family: Saira, Roboto, Helvetica, Arial, sans-serif;
+  --font-family: Roboto, Helvetica, Arial, sans-serif;
+  --header-font-family: Jura, Roboto, Helvetica, Arial, sans-serif;
 
   --surface-0: #101820;
   --surface-100: #80868B;
