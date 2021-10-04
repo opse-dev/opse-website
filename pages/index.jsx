@@ -10,18 +10,15 @@ class Page extends Component {
 
     render() {
         return (
-            <>
-                {/* <Toolbar left="TEST" right="TEST"className="navBar" /> */}
-                <Row>
-                    <div class="container">
-                        <h1>Hello World!</h1>
-                        <h2>Hello World!</h2>
-                        <h3>Hello World!</h3>
-                        <h4>Hello World!</h4>
-                    </div>
-                </Row>
-            </>
-        )
+            <Row>
+                <div class="container">
+                    <h1>Hello World!</h1>
+                    <h2>Hello World!</h2>
+                    <h3>Hello World!</h3>
+                    <h4>Hello World!</h4>
+                </div>
+            </Row>
+        );
     }
 }
 

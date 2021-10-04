@@ -34,6 +34,10 @@ body {
     font-family: var(--font-family);
 }
 
+p{
+    font-weight: 400;
+}
+
 h1, h2 {
     font-family: var(--header-font-family);
 }
@@ -53,4 +57,8 @@ h4{
     font-size: 20px;
     color: var(--primary-color);
     letter-spacing: 1px;
+}
+
+.dark-text {
+    color: #474747;
 }
