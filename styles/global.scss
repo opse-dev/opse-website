@@ -70,3 +70,7 @@ h4{
 .p-inputtext:enabled:focus, .p-dropdown:not(.p-disabled).p-focus{
     box-shadow: none;
 }
+
+.filter .p-component{
+    width: 100%;
+}

@@ -18,14 +18,14 @@ class Page extends Component {
         ];
 
         return (
-            <div className="p-grid">
-                <div className="row p-col-3">
+            <div className="grid">
+                <div className="row col-2 filter">
                     <h1>Schedule</h1>
                     <h2>Filters</h2>
                     <Calendar placeholder="Select Date Range" selectionMode="range" onChange={(e) => setDate(e.value)}></Calendar>
                     <Dropdown placeholder="Select League" options={leagueItems} onChange={(e) => setCity(e.value)}/>
                 </div>
-                <div className="p-col-6">
+                <div className="col">
                     test
                 </div>
             </div>
