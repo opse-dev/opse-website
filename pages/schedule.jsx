@@ -1,3 +1,4 @@
+import { server } from '../config';
 import { Component } from "react";
 import { Toolbar } from 'primereact/toolbar';
 import { Calendar } from 'primereact/calendar';
@@ -26,11 +27,28 @@ class Page extends Component {
                     <Dropdown placeholder="Select League" options={leagueItems} onChange={(e) => setCity(e.value)}/>
                 </div>
                 <div className="col">
-                    test
+                    {//matches.map(matches => <h3>{matches.title}</h3>)
+                    }
                 </div>
             </div>
         )
     }
 }
+
+// export const getServerSideProps = async (context) => {
+//     const res = await fetch(`${server}/api/schedule`)
+
+//     const matches = await res.json()
+
+//     if (!matches) {
+//         return {
+//             notFound: true,
+//         }
+//     }
+
+//     return {
+//         props: {},
+//     }
+// }
 
 export default Page;
