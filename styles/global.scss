@@ -62,3 +62,15 @@ h4{
 .dark-text {
     color: #474747;
 }
+
+/* -----------
+// Forms
+--------------
+*/
+.p-inputtext:enabled:focus, .p-dropdown:not(.p-disabled).p-focus{
+    box-shadow: none;
+}
+
+.filter .p-component{
+    width: 100%;
+}

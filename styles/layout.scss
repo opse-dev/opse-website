@@ -1,5 +1,7 @@
 body {
     padding: 0px; margin: 0px;
+    background: var(--surface-0);
+    color: var(--text-color);
 }
 
 .main{
@@ -14,10 +16,10 @@ body {
 }
 
 .row {
-    padding: 0px 20px;
+    padding: 20px 30px;
 }
 
-.bg-dark {
-    background: var(--surface-0);
-    color: var(--text-color);
+.bg-light {
+    background: var(--text-color);
+    color: var(--secondary-color);
 }

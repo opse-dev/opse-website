@@ -1,9 +1,10 @@
 @charset "UTF-8";
 :root {
   --text-color: #FDFDFD;
-  --text-color-secondary: #DADADA;
+  --text-color-secondary: #FAFAFA;
   --primary-color: #D7282F;
   --primary-color-text: #FDFDFD;
+  --secondary-color: #474747;
 
   --font-family: Roboto, Helvetica, Arial, sans-serif;
   --header-font-family: Jura, Roboto, Helvetica, Arial, sans-serif;
@@ -21,10 +22,6 @@
 
   --content-padding:1.25rem;
   --inline-spacing:0.5rem;
-
-  --small: 576px;
-  --medium: 768px;
-  --large: 992px;
 }
 
 * {

@@ -4,5 +4,6 @@ out
 build
 .next
 .env
+.env.local
 temp
 .vscode
