@@ -1,9 +1,9 @@
-const { getLeagues } = require('../../modules/SQL');
+const { getTeams } = require('../../modules/SQL');
 
 async function handler(req, res) {
     switch (req.method) {
         case "GET":
-            let data = await getLeagues();
+            let data = await getTeams();
             res.json(data);
             break;
     

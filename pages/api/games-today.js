@@ -1,10 +1,10 @@
-const { query } = require('../../modules/SQL');
+const { getMatches } = require('../../modules/SQL');
 
 async function handler(req, res) {
     switch (req.method) {
         case "GET":
             let today = new Date(), result = [],
-                data = await query('SELECT * FROM `matches`');
+                data = await getMatches();
 
             let gamesToNotify = data.filter(game => {
                 let game_time = new Date(game.date);
