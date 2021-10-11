@@ -1,5 +1,4 @@
-if(process.env.NODE_ENV == 'production'){
-    const mysql = require('serverless-mysql')({
+export const mysql = (process.env.NODE_ENV == 'production') ? require('serverless-mysql')({
         config: {
             host     : process.env.DB_LIVE_HOST,
             port     : process.env.DB_LIVE_PORT,
@@ -7,9 +6,8 @@ if(process.env.NODE_ENV == 'production'){
             password : process.env.DB_LIVE_PASS,
             database : process.env.DB_LIVE_NAME
         }
-    });
-} else {
-    const mysql = require('serverless-mysql')({
+    })
+    : require('serverless-mysql')({
         config: {
             host     : process.env.DB_STAGE_HOST,
             port     : process.env.DB_STAGE_PORT,
@@ -18,8 +16,6 @@ if(process.env.NODE_ENV == 'production'){
             database : process.env.DB_STAGE_NAME
         }
     });
-}
-    
 
 exports.query = async (query) => {
     let res = await mysql.query(query);

@@ -3,6 +3,7 @@ import { Component } from "react";
 import { Toolbar } from 'primereact/toolbar';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
+import { sql_query } from '../lib/db';
 
 class Page extends Component {
     constructor(props) {
@@ -18,6 +19,8 @@ class Page extends Component {
             {label: 'Valorant', value: 'val'}
         ];
 
+        console.log(this.props)
+
         return (
             <div className="grid">
                 <div className="row col-2 filter">
@@ -27,28 +30,30 @@ class Page extends Component {
                     <Dropdown placeholder="Select League" options={leagueItems} onChange={(e) => setCity(e.value)}/>
                 </div>
                 <div className="col">
-                    {//matches.map(matches => <h3>{matches.title}</h3>)
-                    }
+                    {//this.props.matches.map((match) => (<h3>{match.date}</h3>))}
+    }
                 </div>
             </div>
         )
     }
 }
 
-// export const getServerSideProps = async (context) => {
-//     const res = await fetch(`${server}/api/schedule`)
+export const getServerSideProps = async (context) => {
+    
+    try {
+        const results = await sql_query(`
+            SELECT * FROM matches
+        `);
 
-//     const matches = await res.json()
-
-//     if (!matches) {
-//         return {
-//             notFound: true,
-//         }
-//     }
-
-//     return {
-//         props: {},
-//     }
-// }
+        const matches = JSON.parse(JSON.stringify(resuts));
+        return {
+            props: {matches},
+        }
+    } catch (e) {
+        return {
+            props: {matches: false, message: e.message},
+        }
+    }
+}
 
 export default Page;
