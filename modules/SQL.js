@@ -1,4 +1,4 @@
-export const mysql = (process.env.NODE_ENV == 'production') ? require('serverless-mysql')({
+const mysql = (process.env.NODE_ENV == 'production') ? require('serverless-mysql')({
         config: {
             host     : process.env.DB_LIVE_HOST,
             port     : process.env.DB_LIVE_PORT,
@@ -16,6 +16,8 @@ export const mysql = (process.env.NODE_ENV == 'production') ? require('serverles
             database : process.env.DB_STAGE_NAME
         }
     });
+
+exports.mysql = mysql;
 
 exports.query = async (query) => {
     let res = await mysql.query(query);
