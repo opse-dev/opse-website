@@ -49,6 +49,15 @@ class Page extends Component {
             }
         })
 
+        const getGameDate = () => {
+            let content = [];
+            
+            for (let gameDate in gameDateArray) {
+                content.push(<h3 key={gameDate}>{gameDateArray[gameDate].date}</h3>)
+            }
+            return content;
+        };
+
         return (
             <div className="grid">
                 <div className="row col-2 filter">
@@ -58,9 +67,7 @@ class Page extends Component {
                     <Dropdown placeholder="Select League" options={leagueItems} onChange={(e) => setCity(e.value)}/>
                 </div>
                 <div className="col">
-                    {gameDateArray.forEach((gameDate) => (
-                        console.log(gameDate)
-                    ))}
+                    {getGameDate()}
                 </div>
             </div>
         )
