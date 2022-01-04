@@ -21,13 +21,14 @@ class Page extends Component {
             {label: 'Valorant', value: 'val'}
         ];
 
-        let gameDateArray = [];
+        let matchDateArray = [];
 
-        class GameDate {
-            constructor(game,date){
+        class matchDate {
+            constructor(game,league,date){
                 this.game = game;
+                this.league = league;
                 this.date = date;
-                this.games = [];
+                this.matches = [];
             }
         }
 
@@ -40,20 +41,67 @@ class Page extends Component {
 
             const date = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate()
 
-            if(typeof gameDateArray[date + "_" + match.leagueName] == 'undefined'){
-                gameDateArray[date + "_" + match.leagueName] = new GameDate(match.leagueName,humanDate);
+            if(typeof matchDateArray[date + "_" + match.leagueName] == 'undefined'){
+                matchDateArray[date + "_" + match.leagueName] = new matchDate(match.gameName,match.leagueName,humanDate);
             
-                gameDateArray[date + "_" + match.leagueName].games.push(match)
+                matchDateArray[date + "_" + match.leagueName].matches.push(match)
             } else {
-                gameDateArray[date + "_" + match.leagueName].games.push(match)
+                matchDateArray[date + "_" + match.leagueName].matches.push(match)
             }
         })
 
-        const getGameDate = () => {
-            let content = [];
+        // const getmatches = (matches) =>{
+        //     let content = [];
             
-            for (let gameDate in gameDateArray) {
-                content.push(<h3 key={gameDate}>{gameDateArray[gameDate].date}</h3>)
+        //     for (let game in matches) {
+        //         console.log(game)
+
+        //         content.push(
+        //         )
+        //     }
+        //     return content;
+        // }
+
+        const getmatchDate = () => {
+            let content = [];
+
+            function formatAMPM(date) {
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0'+minutes : minutes;
+                var strTime = hours + ':' + minutes + ampm;
+                return strTime;
+            }
+            
+            for (let matchDate in matchDateArray) {
+                content.push(
+                <div>
+                    <h3>{matchDateArray[matchDate].date} {matchDateArray[matchDate].game}</h3>
+                    {matchDateArray[matchDate].matches.map((match => {
+                        let d = new Date(match.date)
+
+                        return (
+                            <div>
+                                <div>
+                                    {formatAMPM(d)}
+                                </div>
+                                <div>
+                                    {match.home_name}
+                                    {match.home_score}
+                                </div>
+                                VS
+                                <div>
+                                    {match.away_name}
+                                    {match.away_score}
+                                </div>                            
+                            {/* {console.log(match)} */}
+                            </div>
+                        )
+                    }))}
+                </div>)
             }
             return content;
         };
@@ -67,7 +115,7 @@ class Page extends Component {
                     <Dropdown placeholder="Select League" options={leagueItems} onChange={(e) => setCity(e.value)}/>
                 </div>
                 <div className="col">
-                    {getGameDate()}
+                    {getmatchDate()}
                 </div>
             </div>
         )
@@ -78,13 +126,14 @@ export const getServerSideProps = async (context) => {
     
     try {
         const results = await sql_query(`
-            SELECT matches.id as id, date, home_id, away_id, matches.league_id, s1.name AS home_name, s2.name AS away_name, t1.school_id, t2.school_id, home_score, away_score, leagues.description AS leagueName, s1.logo_url AS home_logo, s2.logo_url AS away_logo
+            SELECT matches.id as id, date, home_id, away_id, matches.league_id, s1.name AS home_name, s2.name AS away_name, home_score, away_score, games.game_name AS gameName, leagues.description AS leagueName, s1.logo_url AS home_logo, s2.logo_url AS away_logo
             FROM matches
             JOIN teams t1 ON home_id = t1.id
             JOIN teams t2 ON away_id = t2.id
             JOIN schools s1 ON t1.school_id = s1.id
             JOIN schools s2 ON t2.school_id = s2.id
             LEFT JOIN leagues ON matches.league_id = leagues.id
+            LEFT JOIN games ON leagues.game_id = games.id
             ORDER BY date ASC
         `);
 
