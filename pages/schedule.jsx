@@ -1,119 +1,108 @@
-import { server } from '../config';
 import { Component } from "react";
-import { Toolbar } from 'primereact/toolbar';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
-import { sql_query } from '../lib/db';
-
+import { Button } from 'primereact/button';
+import { query } from '../modules/SQL';
 
 class Page extends Component {
     constructor(props) {
         super(props);
+
+        this.leagueItems = [
+            {label: 'All Leagues', value: 0},
+            {label: 'Hearthstone', value: 5},
+            {label: 'League of Legends', value: 2},
+            {label: 'Overwatch', value: 3},
+            {label: 'Rocket League', value: 4},
+            {label: 'Valorant', value: 1},
+        ];
+
+        this.matches = this.props.matches.map(d => {
+            d.date = new Date(d.date);
+            return d;
+        });
+
+        this.reduceMatches = (r, a) => {
+            let dateOpts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            r[a.date.toLocaleDateString("en-US", dateOpts)] = r[a.date.toLocaleDateString("en-US", dateOpts)] || [];
+            r[a.date.toLocaleDateString("en-US", dateOpts)].push(a);
+            return r;
+        }; 
+
+        this.state = {
+            filterDate: null,
+            filterLeague: 0,
+            matchItems: this.matches.reduce(this.reduceMatches, Object.create(null))
+        };
+    }
+
+    setFilterDate(date) {
+        this.setState({ filterDate: date });
+
+        if (date == null && this.state.filterLeague == 0) this.setState({ matchItems: this.matches.reduce(this.reduceMatches, Object.create(null)) });
+        else {
+            if (this.state.filterLeague == 0) this.setState({ matchItems: this.matches.filter(m => m.date.getDate() == date.getDate() && m.date.getMonth() == date.getMonth() && m.date.getFullYear() == date.getFullYear()).reduce(this.reduceMatches, Object.create(null)) });
+            else this.setState({ matchItems: this.matches.filter(m => m.league_id == this.state.filterLeague && m.date.getDate() == date.getDate() && m.date.getMonth() == date.getMonth() && m.date.getFullYear() == date.getFullYear()).reduce(this.reduceMatches, Object.create(null)) });
+        }
+    }
+
+    setFilterLeague(league) {
+        this.setState({ filterLeague: league });
+
+        if (this.state.filterDate == null && league == 0) this.setState({ matchItems: this.matches.reduce(this.reduceMatches, Object.create(null)) });
+        else {
+            if (this.state.filterDate == null) this.setState({ matchItems: this.matches.filter(m => m.league_id == league).reduce(this.reduceMatches, Object.create(null)) });
+            else this.setState({ matchItems: this.matches.filter(m => m.league_id == league && m.date.getDate() == this.state.filterDate.getDate() && m.date.getMonth() == this.state.filterDate.getMonth() && m.date.getFullYear() == this.state.filterDate.getFullYear()).reduce(this.reduceMatches, Object.create(null)) });
+        }
     }
 
     render() {
-        const leagueItems = [
-            {label: 'Hearthstone', value: 'hs'},
-            {label: 'League of Legends', value: 'lol'},
-            {label: 'Overwatch', value: 'ow'},
-            {label: 'Rocket League', value: 'rl'},
-            {label: 'Valorant', value: 'val'}
-        ];
-
-        let matchDateArray = [];
-
-        class matchDate {
-            constructor(game,league,date){
-                this.game = game;
-                this.league = league;
-                this.date = date;
-                this.matches = [];
-            }
-        }
-
-        this.props.matches.forEach((match) => {
-            const d = new Date(match.date)
-            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-            const humanDate = days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
-
-            const date = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate()
-
-            if(typeof matchDateArray[date + "_" + match.leagueName] == 'undefined'){
-                matchDateArray[date + "_" + match.leagueName] = new matchDate(match.gameName,match.leagueName,humanDate);
-            
-                matchDateArray[date + "_" + match.leagueName].matches.push(match)
-            } else {
-                matchDateArray[date + "_" + match.leagueName].matches.push(match)
-            }
-        })
-
-        const getmatchDate = () => {
-            let content = [];
-
-            function formatAMPM(date) {
-                var hours = date.getHours();
-                var minutes = date.getMinutes();
-                var timezone = date.toTimeString().slice(9,17);
-                var ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // the hour '0' should be '12'
-                minutes = minutes < 10 ? '0'+minutes : minutes;
-                var strTime = hours + ':' + minutes + ampm /*+ ' ' + timezone */;
-                return strTime;
-            }
-            
-            for (let matchDate in matchDateArray) {
-                content.push(
-                <div className="match-date">
-                    <span className="date">{matchDateArray[matchDate].date}&nbsp;&nbsp;</span>
-                    <span className="game">{matchDateArray[matchDate].game}</span>
-                    {matchDateArray[matchDate].matches.map((match => {
-                        let d = new Date(match.date)
-
-                        return (
-                            <div className="match">
-                                <div className="time">
-                                    {formatAMPM(d)}
-                                </div> 
-                                <div className="school-name">
-                                    {match.home_name}
-                                </div>
-                                <img src={'/logos/' + match.home_logo} className="logo" alt={match.home_name}/>
-                                <div className="score" style={match.home_score > match.away_score ? {opacity: 1} : null }>{match.home_score}</div>
-                                <div className="vs">vs</div>
-                                <div className="score" style={match.away_score > match.home_score ? {opacity: 1} : null }>{match.away_score}</div>
-                                <img src={'/logos/' + match.away_logo} className="logo" alt={match.away_name}/>
-                                <div className="school-name">
-                                    {match.away_name}
-                                </div>
-                                <div>
-                                    {(match.vod) ?
-                                        <a target="_blank" href={match.vod}><i class="pi pi-youtube"></i> VOD</a> :
-                                        null
-                                    }
-                                </div>
-                            {console.log(match)}
-                            </div>
-                        )
-                    }))}
-                </div>)
-            }
-            return content;
-        };
-
         return (
             <div className="grid">
                 <div className="row col-2 filter">
                     <h1>Schedule</h1>
                     <h2>Filters</h2>
-                    <Calendar placeholder="Select Date Range" selectionMode="range" onChange={(e) => setDate(e.value)}></Calendar>
-                    <Dropdown placeholder="Select League" options={leagueItems} onChange={(e) => setCity(e.value)}/>
+                    <div className="p-inputgroup">
+                        <Calendar placeholder="Select Date" onChange={ (e) => this.setFilterDate(e.value) } value={this.state.filterDate} dateFormat="dd M yy" />
+                        <Button icon="pi pi-times" className="p-button-text p-button-plain w-2"  onClick={ () => this.setFilterDate(null) } />
+                    </div>
+                    <Dropdown placeholder="Select League" options={this.leagueItems} onChange={ (e) => this.setFilterLeague(e.value) } value={this.state.filterLeague} />
                 </div>
                 <div className="row col-2"></div>
                 <div className="col">
-                    {getmatchDate()}
+                    {Object.keys(this.state.matchItems).map((d, key) => {
+                        return (
+                            <div key={key} className="match-date">
+                                <span className="game">{d}</span>
+                                {this.state.matchItems[d].map(match => {
+                                    return (
+                                        <div className="match">
+                                            <div className="time">
+                                                {match.date.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit', hour12: true})}
+                                            </div> 
+                                            <div className="school-name">
+                                                {match.home_name}
+                                            </div>
+                                            <img src={'/logos/' + match.home_logo} className="logo" alt={match.home_name}/>
+                                            <div className="score" style={match.home_score > match.away_score ? {opacity: 1} : null }>{match.home_score}</div>
+                                            <div className="vs">vs</div>
+                                            <div className="score" style={match.away_score > match.home_score ? {opacity: 1} : null }>{match.away_score}</div>
+                                            <img src={'/logos/' + match.away_logo} className="logo" alt={match.away_name}/>
+                                            <div className="school-name">
+                                                {match.away_name}
+                                            </div>
+                                            <div>
+                                                {(match.vod) ?
+                                                    <a target="_blank" href={match.vod}><i class="pi pi-youtube"></i> VOD</a> :
+                                                    null
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         )
@@ -123,7 +112,7 @@ class Page extends Component {
 export const getServerSideProps = async (context) => {
     
     try {
-        const results = await sql_query(`
+        const results = await query(`
             SELECT matches.id as id, date, vod, home_id, away_id, matches.league_id, s1.name AS home_name, s2.name AS away_name, home_score, away_score, games.game_name AS gameName, leagues.description AS leagueName, s1.logo_url AS home_logo, s2.logo_url AS away_logo
             FROM matches
             JOIN teams t1 ON home_id = t1.id
@@ -144,7 +133,7 @@ export const getServerSideProps = async (context) => {
         return {
             props: {matches: false, message: e.message},
         }
-    }
+    };
 }
 
 export default Page;
