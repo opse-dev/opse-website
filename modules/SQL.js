@@ -1,4 +1,6 @@
-const mysql = (process.env.NODE_ENV == 'production') ? require('serverless-mysql')({
+import mysql from 'serverless-mysql';
+
+export const db = (process.env.NODE_ENV == 'production') ? mysql({
         config: {
             host     : process.env.DB_LIVE_HOST,
             port     : process.env.DB_LIVE_PORT,
@@ -7,7 +9,7 @@ const mysql = (process.env.NODE_ENV == 'production') ? require('serverless-mysql
             database : process.env.DB_LIVE_NAME
         }
     })
-    : require('serverless-mysql')({
+    : mysql({
         config: {
             host     : process.env.DB_STAGE_HOST,
             port     : process.env.DB_STAGE_PORT,
@@ -17,40 +19,38 @@ const mysql = (process.env.NODE_ENV == 'production') ? require('serverless-mysql
         }
     });
 
-exports.mysql = mysql;
-
-exports.query = async (query) => {
-    let res = await mysql.query(query);
-    await mysql.end();
+export async function query(query, values = []) {
+    let res = await db.query(query, values);
+    await db.end();
     return res;
 }
 
-exports.getTeams = async () => {
-    let res = await mysql.query('SELECT * FROM `teams`');
-    await mysql.end();
+export async function getTeams() {
+    let res = await db.query('SELECT * FROM `teams`');
+    await db.end();
     return res;
 }
 
-exports.getSchools = async () => {
-    let res = await mysql.query('SELECT * FROM `schools`');
-    await mysql.end();
+export async function getSchools() {
+    let res = await db.query('SELECT * FROM `schools`');
+    await db.end();
     return res;
 }
 
-exports.getPlayers = async () => {
-    let res = await mysql.query('SELECT * FROM `players`');
-    await mysql.end();
+export async function getPlayers() {
+    let res = await db.query('SELECT * FROM `players`');
+    await db.end();
     return res;
 }
 
-exports.getLeagues = async () => {
-    let res = await mysql.query('SELECT * FROM `games`');
-    await mysql.end();
+export async function getLeagues() {
+    let res = await db.query('SELECT * FROM `games`');
+    await db.end();
     return res;
 }
 
-exports.getMatches = async () => {
-    let res = await mysql.query('SELECT * FROM `matches`');
-    await mysql.end();
+export async function getMatches() {
+    let res = await db.query('SELECT * FROM `matches`');
+    await db.end();
     return res;
 }

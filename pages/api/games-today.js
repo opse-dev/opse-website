@@ -1,10 +1,10 @@
-const { query, mysql } = require('../../modules/SQL');
+const { query } = require('../../modules/SQL');
 
 async function handler(req, res) {
     switch (req.method) {
         case "GET":
             let today = new Date(), result = [],
-                data = await mysql.query(`
+                data = await query(`
                     SELECT * FROM matches
                 `);
 
