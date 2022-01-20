@@ -9,6 +9,7 @@
   "dependencies": {
     "child_process": "^1.0.2",
     "next": "^12.0.7",
+    "next-auth": "^4.1.2",
     "primeflex": "^3.1.2",
     "primeicons": "^5.0.0",
     "primereact": "^7.1.0",
