@@ -1,10 +1,10 @@
+import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
-import Layout from '../components/Layout';
 import "../styles/global.scss";
 
 function MyApp({ Component, pageProps }) {
     return (
-        <>
+        <SessionProvider session={pageProps.session}>
             <Head>
                 <link rel="icon" href="/favicon.ico" />
                 <title>{pageProps.title}</title>
@@ -13,10 +13,10 @@ function MyApp({ Component, pageProps }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
     
-            <Layout>
+            <>
                 <Component {...pageProps} />
-            </Layout>
-        </>
+            </>
+        </SessionProvider>
     );
 }
 

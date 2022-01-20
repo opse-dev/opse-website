@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Dropdown } from 'primereact/dropdown';
 import { Message } from 'primereact/message';
+import Layout from '../components/Layout';
 
 export default function Standings () {
     const [league,setLeague] = useState(null)
@@ -41,56 +42,58 @@ export default function Standings () {
     },[league]);
 
     return (
-        <div className="grid">
-            <div className="row col-2 filter">
-                <h1>Standings</h1>
-                <h2>Filters</h2>
-                <Dropdown placeholder="Select Game" options={games} onChange={ (e) => setGame(e.value) } value={game} />
-                {(!leagues) ? (
-                    null
-                ) : (
-                    <Dropdown placeholder="Select League" options={leagues} onChange={ (e) => setLeague(e.value) } value={league} />
-                )}
-            </div>
-            <div className="row col-2"></div>
-            <div className="col">
-                {((!standings) || (standings.length == 0)) ? (
-                    <div className="standings-info-container">
-                        <Message text='Use the filters to select a league.' style={{'max-width': '400px', 'padding': '20px'}}></Message>
-                    </div>
-                ) : (
-                    <div className="standings">
-                        <div className="standing">
-                            <div className="rank">
-                                Rank
-                            </div>
-                            <div className="school-name">
-                                Team
-                            </div>
-                            <div></div>
-                            <div>
-                                Wins/Losses
-                            </div>
+        <Layout>
+            <div className="grid">
+                <div className="row col-2 filter">
+                    <h1>Standings</h1>
+                    <h2>Filters</h2>
+                    <Dropdown placeholder="Select Game" options={games} onChange={ (e) => setGame(e.value) } value={game} />
+                    {(!leagues) ? (
+                        null
+                    ) : (
+                        <Dropdown placeholder="Select League" options={leagues} onChange={ (e) => setLeague(e.value) } value={league} />
+                    )}
+                </div>
+                <div className="row col-2"></div>
+                <div className="col">
+                    {((!standings) || (standings.length == 0)) ? (
+                        <div className="standings-info-container">
+                            <Message text='Use the filters to select a league.' style={{'max-width': '400px', 'padding': '20px'}}></Message>
                         </div>
-                        {standings.map((standing, key) => {
-                            return (
-                                <div key={key} className="standing">
-                                    <div className="rank">
-                                        {standing.rank}
-                                    </div>
-                                    <img src={'/logos/' + standing.logo} className="logo" alt={standing.name}/>
-                                    <div className="school-name">
-                                        {standing.name}
-                                    </div>
-                                    <div>
-                                        <b>{standing.wins ? standing.wins : '0'}</b>W-<b>{standing.losses ? standing.losses : '0'}</b>L
-                                    </div>
+                    ) : (
+                        <div className="standings">
+                            <div className="standing">
+                                <div className="rank">
+                                    Rank
                                 </div>
-                            )
-                        })}
-                    </div>
-                )}
+                                <div className="school-name">
+                                    Team
+                                </div>
+                                <div></div>
+                                <div>
+                                    Wins/Losses
+                                </div>
+                            </div>
+                            {standings.map((standing, key) => {
+                                return (
+                                    <div key={key} className="standing">
+                                        <div className="rank">
+                                            {standing.rank}
+                                        </div>
+                                        <img src={'/logos/' + standing.logo} className="logo" alt={standing.name}/>
+                                        <div className="school-name">
+                                            {standing.name}
+                                        </div>
+                                        <div>
+                                            <b>{standing.wins ? standing.wins : '0'}</b>W-<b>{standing.losses ? standing.losses : '0'}</b>L
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </Layout>
     )
 }
