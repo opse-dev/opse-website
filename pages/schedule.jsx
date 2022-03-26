@@ -85,11 +85,11 @@ class Page extends Component {
                                                 <div className="school-name">
                                                     {match.home_name}
                                                 </div>
-                                                <img src={'/logos/' + match.home_logo} className="logo" alt={match.home_name}/>
+                                                <img src={match.home_logo} className="logo" alt={match.home_name}/>
                                                 <div className="score" style={match.home_score > match.away_score ? {opacity: 1} : null }>{match.home_score}</div>
                                                 <div className="vs">vs</div>
                                                 <div className="score" style={match.away_score > match.home_score ? {opacity: 1} : null }>{match.away_score}</div>
-                                                <img src={'/logos/' + match.away_logo} className="logo" alt={match.away_name}/>
+                                                <img src={match.away_logo} className="logo" alt={match.away_name}/>
                                                 <div className="school-name">
                                                     {match.away_name}
                                                 </div>

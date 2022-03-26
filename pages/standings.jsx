@@ -80,7 +80,7 @@ export default function Standings () {
                                         <div className="rank">
                                             {standing.rank}
                                         </div>
-                                        <img src={'/logos/' + standing.logo} className="logo" alt={standing.name}/>
+                                        <img src={standing.logo} className="logo" alt={standing.name}/>
                                         <div className="school-name">
                                             {standing.name}
                                         </div>
