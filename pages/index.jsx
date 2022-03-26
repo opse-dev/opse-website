@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Toolbar } from 'primereact/toolbar';
+import Layout from '../components/Layout';
 
 class Page extends Component {
     constructor(props) {
@@ -8,14 +8,16 @@ class Page extends Component {
 
     render() {
         return (
-            <div className="row bg-dark">
-                <div className="container">
-                    <h1>Hello World!</h1>
-                    <h2>Hello World!</h2>
-                    <h3>Hello World!</h3>
-                    <h4>Hello World!</h4>
+            <Layout>
+                <div className="row bg-dark">
+                    <div className="container">
+                        <h1>Hello World!</h1>
+                        <h2>Hello World!</h2>
+                        <h3>Hello World!</h3>
+                        <h4>Hello World!</h4>
+                    </div>
                 </div>
-            </div>
+            </Layout>
         );
     }
 }

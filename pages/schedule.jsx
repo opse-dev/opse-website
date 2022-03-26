@@ -3,6 +3,7 @@ import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { query } from '../modules/SQL';
+import Layout from '../components/Layout';
 
 class Page extends Component {
     constructor(props) {
@@ -58,53 +59,55 @@ class Page extends Component {
 
     render() {
         return (
-            <div className="grid">
-                <div className="row col-2 filter">
-                    <h1>Schedule</h1>
-                    <h2>Filters</h2>
-                    <div className="p-inputgroup">
-                        <Calendar placeholder="Select Date" onChange={ (e) => this.setFilterDate(e.value) } value={this.state.filterDate} dateFormat="dd M yy" />
-                        <Button icon="pi pi-times" className="p-button-text p-button-plain w-2"  onClick={ () => this.setFilterDate(null) } />
+            <Layout>
+                <div className="grid">
+                    <div className="row col-2 filter">
+                        <h1>Schedule</h1>
+                        <h2>Filters</h2>
+                        <div className="p-inputgroup">
+                            <Calendar placeholder="Select Date" onChange={ (e) => this.setFilterDate(e.value) } value={this.state.filterDate} dateFormat="dd M yy" />
+                            <Button icon="pi pi-times" className="p-button-text p-button-plain w-2"  onClick={ () => this.setFilterDate(null) } />
+                        </div>
+                        <Dropdown placeholder="Select League" options={this.leagueItems} onChange={ (e) => this.setFilterLeague(e.value) } value={this.state.filterLeague} />
                     </div>
-                    <Dropdown placeholder="Select League" options={this.leagueItems} onChange={ (e) => this.setFilterLeague(e.value) } value={this.state.filterLeague} />
+                    <div className="row col-2"></div>
+                    <div className="col">
+                        {Object.keys(this.state.matchItems).map((d, key) => {
+                            return (
+                                <div key={key} className="match-date">
+                                    <span className="game">{d}</span>
+                                    {this.state.matchItems[d].map(match => {
+                                        return (
+                                            <div className="match">
+                                                <div className="time">
+                                                    {match.date.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit', hour12: true})}
+                                                </div> 
+                                                <div className="school-name">
+                                                    {match.home_name}
+                                                </div>
+                                                <img src={'/logos/' + match.home_logo} className="logo" alt={match.home_name}/>
+                                                <div className="score" style={match.home_score > match.away_score ? {opacity: 1} : null }>{match.home_score}</div>
+                                                <div className="vs">vs</div>
+                                                <div className="score" style={match.away_score > match.home_score ? {opacity: 1} : null }>{match.away_score}</div>
+                                                <img src={'/logos/' + match.away_logo} className="logo" alt={match.away_name}/>
+                                                <div className="school-name">
+                                                    {match.away_name}
+                                                </div>
+                                                <div>
+                                                    {(match.vod) ?
+                                                        <a target="_blank" href={match.vod}><i className="pi pi-youtube"></i> VOD</a> :
+                                                        null
+                                                    }
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
-                <div className="row col-2"></div>
-                <div className="col">
-                    {Object.keys(this.state.matchItems).map((d, key) => {
-                        return (
-                            <div key={key} className="match-date">
-                                <span className="game">{d}</span>
-                                {this.state.matchItems[d].map(match => {
-                                    return (
-                                        <div className="match">
-                                            <div className="time">
-                                                {match.date.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit', hour12: true})}
-                                            </div> 
-                                            <div className="school-name">
-                                                {match.home_name}
-                                            </div>
-                                            <img src={'/logos/' + match.home_logo} className="logo" alt={match.home_name}/>
-                                            <div className="score" style={match.home_score > match.away_score ? {opacity: 1} : null }>{match.home_score}</div>
-                                            <div className="vs">vs</div>
-                                            <div className="score" style={match.away_score > match.home_score ? {opacity: 1} : null }>{match.away_score}</div>
-                                            <img src={'/logos/' + match.away_logo} className="logo" alt={match.away_name}/>
-                                            <div className="school-name">
-                                                {match.away_name}
-                                            </div>
-                                            <div>
-                                                {(match.vod) ?
-                                                    <a target="_blank" href={match.vod}><i class="pi pi-youtube"></i> VOD</a> :
-                                                    null
-                                                }
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+            </Layout>
         )
     }
 }
