@@ -3,7 +3,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Message } from 'primereact/message';
 
 export default function Standings () {
-    const [league,setLeague] = useState(null)
+    const [league,setLeague] = useState(1)
     const [leagues, setLeagues] = useState(null)
     const [games,setGames] = useState(null)
     const [game,setGame] = useState(null)
@@ -78,7 +78,7 @@ export default function Standings () {
                                     <div className="rank">
                                         {standing.rank}
                                     </div>
-                                    <img src={'/logos/' + standing.logo} className="logo" alt={standing.name}/>
+                                    <img src={standing.logo} className="logo" alt={standing.name}/>
                                     <div className="school-name">
                                         {standing.name}
                                     </div>

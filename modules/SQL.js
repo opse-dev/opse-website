@@ -61,6 +61,23 @@ export async function getMatches() {
     return res;
 }
 
+
+export async function getSchedule() {
+    let res = await db.query(`
+        SELECT matches.id as id, date, vod, home_id, away_id, matches.league_id, s1.name AS home_name, s2.name AS away_name, home_score, away_score, games.game_name AS gameName, leagues.description AS leagueName, s1.logo_url AS home_logo, s2.logo_url AS away_logo
+        FROM matches
+        JOIN teams t1 ON home_id = t1.id
+        JOIN teams t2 ON away_id = t2.id
+        JOIN schools s1 ON t1.school_id = s1.id
+        JOIN schools s2 ON t2.school_id = s2.id
+        LEFT JOIN leagues ON matches.league_id = leagues.id
+        LEFT JOIN games ON leagues.game_id = games.id
+        ORDER BY date ASC
+    `);
+    await db.end();
+    return res;
+}
+
 export async function getStandings(league) {
     let res = await db.query(`
         SELECT name, logo, wins, losses,
