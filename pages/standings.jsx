@@ -4,7 +4,7 @@ import { Message } from 'primereact/message';
 import Layout from '../components/Layout';
 
 export default function Standings () {
-    const [league,setLeague] = useState(null)
+    const [league,setLeague] = useState(1)
     const [leagues, setLeagues] = useState(null)
     const [games,setGames] = useState(null)
     const [game,setGame] = useState(null)

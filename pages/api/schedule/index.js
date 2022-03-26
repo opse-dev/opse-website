@@ -1,14 +1,17 @@
-import { sql_query } from '../../../lib/db'
+const { getSchedule } = require('../../../modules/SQL');
 
-const handler = async (_, res) => {
-    try {
-        const results = await sql_query(`
-            SELECT * FROM matches
-        `);
+async function handler(req, res) {
+    //const { league } = req.query
 
-        return res.json(results);
-    } catch (e) {
-        res.status(500).json({ message: e.message });
+    switch (req.method) {
+        case "GET":
+            let data = await getSchedule();
+            res.json(data);
+            break;
+    
+        default:
+            res.end("Method not allowed");
+            break;
     }
 }
 
