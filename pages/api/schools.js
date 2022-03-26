@@ -1,14 +1,14 @@
-const { getSchools } = require('../../modules/SQL');
+import { getSchools } from '../../modules/SQL';
 
 async function handler(req, res) {
     switch (req.method) {
-        case "GET":
+        case 'GET':
             let data = await getSchools();
             res.json(data);
             break;
-    
+
         default:
-            res.end("Method not allowed");
+            res.end('Method not allowed');
             break;
     }
 }

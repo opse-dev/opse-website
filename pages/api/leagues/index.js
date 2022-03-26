@@ -1,9 +1,9 @@
-import { getTeams } from '../../modules/SQL';
+import { getLeague } from '../../../modules/SQL';
 
 async function handler(req, res) {
     switch (req.method) {
         case 'GET':
-            let data = await getTeams();
+            let data = await getLeague();
             res.json(data);
             break;
 

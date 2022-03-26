@@ -1,23 +1,25 @@
 import mysql from 'serverless-mysql';
 
-export const db = (process.env.NODE_ENV == 'production') ? mysql({
-        config: {
-            host     : process.env.DB_LIVE_HOST,
-            port     : process.env.DB_LIVE_PORT,
-            user     : process.env.DB_LIVE_USER,
-            password : process.env.DB_LIVE_PASS,
-            database : process.env.DB_LIVE_NAME
-        }
-    })
-    : mysql({
-        config: {
-            host     : process.env.DB_STAGE_HOST,
-            port     : process.env.DB_STAGE_PORT,
-            user     : process.env.DB_STAGE_USER,
-            password : process.env.DB_STAGE_PASS,
-            database : process.env.DB_STAGE_NAME
-        }
-    });
+export const db =
+    process.env.NODE_ENV == 'production'
+        ? mysql({
+              config: {
+                  host: process.env.DB_LIVE_HOST,
+                  port: process.env.DB_LIVE_PORT,
+                  user: process.env.DB_LIVE_USER,
+                  password: process.env.DB_LIVE_PASS,
+                  database: process.env.DB_LIVE_NAME,
+              },
+          })
+        : mysql({
+              config: {
+                  host: process.env.DB_STAGE_HOST,
+                  port: process.env.DB_STAGE_PORT,
+                  user: process.env.DB_STAGE_USER,
+                  password: process.env.DB_STAGE_PASS,
+                  database: process.env.DB_STAGE_NAME,
+              },
+          });
 
 export async function query(query, values = []) {
     let res = await db.query(query, values);
@@ -50,30 +52,15 @@ export async function getGames() {
 }
 
 export async function getLeague(game) {
-    let res = await db.query(`SELECT * FROM leagues WHERE game_id = ${game}`);
+    let res = game
+        ? await db.query(`SELECT * FROM leagues WHERE game_id = ${game}`)
+        : await db.query('SELECT * FROM leagues');
     await db.end();
     return res;
 }
 
 export async function getMatches() {
     let res = await db.query('SELECT * FROM `matches`');
-    await db.end();
-    return res;
-}
-
-
-export async function getSchedule() {
-    let res = await db.query(`
-        SELECT matches.id as id, date, vod, home_id, away_id, matches.league_id, s1.name AS home_name, s2.name AS away_name, home_score, away_score, games.game_name AS gameName, leagues.description AS leagueName, s1.logo_url AS home_logo, s2.logo_url AS away_logo
-        FROM matches
-        JOIN teams t1 ON home_id = t1.id
-        JOIN teams t2 ON away_id = t2.id
-        JOIN schools s1 ON t1.school_id = s1.id
-        JOIN schools s2 ON t2.school_id = s2.id
-        LEFT JOIN leagues ON matches.league_id = leagues.id
-        LEFT JOIN games ON leagues.game_id = games.id
-        ORDER BY date ASC
-    `);
     await db.end();
     return res;
 }

@@ -1,13 +1,13 @@
-import React from 'react'
+import Link from 'next/link';
 
-const Footer = () => {
+const socials = [];
+
+const Component = () => {
     return (
-        <footer>
-            <div className="container">
-                &copy; {new Date().getFullYear()} Ontario Post-Secondary Esports.
-            </div>
-        </footer>
-    )
-}
+        <div className="flex w-full items-center justify-between bg-gray-800 p-4">
+            &copy; {new Date().getFullYear()} OPSE
+        </div>
+    );
+};
 
-export default Footer
+export default Component;

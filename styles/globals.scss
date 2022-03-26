@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@import 'nprogress/nprogress.css';
+
+#nprogress {
+    .bar {
+        background: #d7282f !important;
+        z-index: 999;
+    }
+
+    .peg {
+        box-shadow: 0 0 10px #d7282f, 0 0 5px #d7282f !important;
+    }
+}
+
+@layer base {
+    * {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-opse-blue text-gray-200 #{!important};
+    }
+}

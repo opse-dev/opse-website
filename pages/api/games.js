@@ -1,14 +1,14 @@
-const { getGames } = require('../../modules/SQL');
+import { getGames } from '../../modules/SQL';
 
 async function handler(req, res) {
     switch (req.method) {
-        case "GET":
+        case 'GET':
             let data = await getGames();
             res.json(data);
             break;
-    
+
         default:
-            res.end("Method not allowed");
+            res.end('Method not allowed');
             break;
     }
 }

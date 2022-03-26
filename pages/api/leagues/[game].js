@@ -1,16 +1,16 @@
-const { getLeague } = require('../../../modules/SQL');
+import { getLeague } from '../../../modules/SQL';
 
 async function handler(req, res) {
-    const { game } = req.query
+    const { game } = req.query;
 
     switch (req.method) {
-        case "GET":
+        case 'GET':
             let data = await getLeague(game);
             res.json(data);
             break;
-    
+
         default:
-            res.end("Method not allowed");
+            res.end('Method not allowed');
             break;
     }
 }
